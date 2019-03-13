@@ -40,7 +40,7 @@ for (imagePath, boundingBoxes) in images:
     print(f"[x] after applying non-maximum, {len(pick)} bounding boxes")
 
     # loop over the picked bounding boxes and draw them
-    for (startX, startY, endX, endY) in pick:
+    for (startX, startY, endX, endY) in boundingBoxes[pick]:
         cv2.rectangle(image, (startX, startY), (endX, endY), (0, 255, 0), 2)
 
     # display the images

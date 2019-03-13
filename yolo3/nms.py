@@ -4,7 +4,7 @@ import numpy as np
 
 
 # Felzenszwalb et al.
-def non_max_suppression(boxes, overlap_thresh):
+def non_max_suppression(boxes, overlap_thresh, scores=None):
     # if there are no boxes, return an empty list
     if len(boxes) == 0:
         return []
@@ -21,7 +21,10 @@ def non_max_suppression(boxes, overlap_thresh):
     # compute the area of the bounding boxes and sort the bounding
     # boxes by the bottom-right y-coordinate of the bounding box
     area = (x2 - x1 + 1) * (y2 - y1 + 1)
-    idxs = np.argsort(y2)
+    if scores is None:
+        idxs = y2.argsort()
+    else:
+        idxs = scores.argsort()
 
     # keep looping while some indexes still remain in the indexes
     # list
@@ -51,4 +54,4 @@ def non_max_suppression(boxes, overlap_thresh):
         idxs = idxs[np.where(overlap <= overlap_thresh)[0]]
 
     # return only the bounding boxes that were picked
-    return boxes[pick]
+    return pick
